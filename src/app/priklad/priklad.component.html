@@ -1,0 +1,16 @@
+<div class="content" *ngIf="task != null">
+    <div class="info">
+        <p class="text-big bold">
+            Úloha: {{task.Title}}
+        </p>
+        <p class="text-small desc">
+            {{task.Text}}
+        </p>
+        <div class="line"></div>
+    </div>
+    <ng-container *ngFor="let img of task.AttachmentURLs">
+        <div class="solutions">
+            <img [src]="img" alt="riesenie" class="solution">
+        </div>
+    </ng-container>
+</div>

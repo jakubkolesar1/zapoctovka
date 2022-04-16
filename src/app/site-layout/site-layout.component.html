@@ -1,0 +1,93 @@
+<div class="menu">
+  <p 
+    class="title"
+    [routerLink]="['/home']"
+    (click)="clearSearch()"
+  >Fyzikátor</p>
+  <div class="burger"
+  (click)="menuOpened = !menuOpened">
+    <img src="assets/images/burger.svg" alt="burger-menu">
+  </div>
+</div>
+<div 
+  class="mobile-search"
+  [ngClass]="{active: menuOpened === true}"
+>
+  <div class="search">
+    <input 
+      type="text" 
+      class="searchbar"
+      placeholder="Zadajte znenie úlohy alebo číslo príkladu..."
+      [(ngModel)]="input"
+      (keyup)="searchProblem()"
+      (focus)="searching = true"
+      (blur)="searching = false"
+    >
+    <img 
+      src="assets/images/search-icon.svg" 
+      alt="search" 
+      class="icon"
+    >
+  </div>
+  <div class="results space">
+    <ng-container *ngFor="let item of results">
+      <div 
+        class="result-card"
+        [routerLink]="['problem',item.Title]"
+        (click)="menuOpened = false"
+      >
+        <p class="text-small bold">
+          Úloha: {{item.Title}}
+        </p>
+        <p class="text-small bold">
+          Znenie: <span>{{item.Text}}</span>
+        </p>
+      </div>
+    </ng-container>
+  </div>
+</div>
+<div class="content">
+  <div class="left">
+    <div class="center-content">
+      <div class="search">
+        <input 
+          type="text" 
+          class="searchbar"
+          placeholder="Zadajte znenie úlohy alebo číslo príkladu..."
+          [(ngModel)]="input"
+          (keyup)="searchProblem()"
+          (focus)="searching = true"
+          (blur)="searching = false"
+        >
+        <img 
+          src="assets/images/search-icon.svg" 
+          alt="search" 
+          class="icon"
+        >
+      </div>
+    </div>
+    <div class="results space">
+      <div class="nothing" *ngIf="results.length === 0 && searching === true && activeTask === null">
+        <p class="text-big">Nothing found yet...</p>
+      </div>
+      <ng-container *ngFor="let item of results">
+        <div 
+          class="result-card"
+          [routerLink]="['problem',item.Title]"
+        >
+          <p class="text-small bold">
+            Úloha: {{item.Title}}
+          </p>
+          <p class="text-small bold">
+            Znenie: <span>{{item.Text}}</span>
+          </p>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <div class="right">
+    <div class="content">
+      <router-outlet (activate)="onOutletLoaded($event)"></router-outlet>
+    </div>
+  </div>
+</div>
